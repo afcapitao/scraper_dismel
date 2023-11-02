@@ -1,0 +1,4 @@
+venv/
+extracao/
+*.pyc
+.DS_Store

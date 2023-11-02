@@ -4,7 +4,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from common import *
 
-def main(arg):
+def main(isFormatted):
   URL = "https://www.dismel.pt/sensores-vernier"
   page = requests.get(URL)
   soup = BeautifulSoup(page.content, "html.parser")
@@ -21,7 +21,7 @@ def main(arg):
     page = requests.get(URL+url_product)
     soup = BeautifulSoup(page.content, "html.parser")
     productName = extractProductName(soup)
-    descricao = extractDescricao(soup)
+    descricao = extractDescricao(soup,isFormatted)
     print(productName)
 
     accordion_sections = soup.find_all('div', class_='accordion-group')
@@ -35,8 +35,14 @@ def main(arg):
     for section in accordion_sections:
       accordion_heading_text = section.find('div', class_='accordion-heading')
       accordion_inner_text = section.find('div', class_='accordion-inner')
-      text = accordion_inner_text.get_text(strip=True)
+
+      text=''
       header = accordion_heading_text.get_text(strip=True)
+      if isFormatted == 'false':
+        text = accordion_inner_text.get_text(strip=True)
+      else:
+        text = accordion_inner_text
+
       if header=='Especificações':
         content['especificacoes'].append(text)
       elif header=='Acessórios':
@@ -66,5 +72,5 @@ def main(arg):
   }, index=pd.RangeIndex(start=0, stop=count))
 
   # Save the DataFrame to an Excel file
-  excel_file = 'sensores.xlsx'
+  excel_file = buildFileName(Constants.FILENAME_SENSORES,isFormatted)
   df.to_excel(excel_file, index=False, header=True)

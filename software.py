@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from common import *
 import re
 
-def main(arg):
+def main(isFormatted):
 
   URL = "https://www.dismel.pt/index.php/software-livros-posteres/software-vernier"
   page = requests.get(URL)
@@ -29,11 +29,14 @@ def main(arg):
 
     desc1_div = section.find('div', class_='ba-item-text ba-item').find('div', class_='content-text')
     desc1 = desc1_div.get_text(strip=True)
-    print('desc1: ' +desc1)
+    desc1=''
+    if desc1_div is not None:
+      desc1 = desc1_div.get_text(strip=True) if isFormatted=='false' else desc1_div
 
     desc2_div = section.find('div', class_='ba-item-accordion ba-item').find('div', class_='accordion-inner')
-    desc2 = desc2_div.get_text(strip=True) if desc2_div is not None else ''
-    print('desc2: ' +desc2)
+    desc2=''
+    if desc2_div is not None:
+      desc2 = desc2_div.get_text(strip=True) if isFormatted=='false' else desc2_div
    
     if software != '' and desc1 != '' and desc2 != '':
       softwares.append(software)
@@ -50,5 +53,5 @@ def main(arg):
   }, index=pd.RangeIndex(start=0, stop=count))
 
   # Save the DataFrame to an Excel file
-  excel_file = 'software.xlsx'
+  excel_file = buildFileName(Constants.FILENAME_SENSORES,isFormatted)
   df.to_excel(excel_file, index=False, header=True)

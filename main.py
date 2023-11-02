@@ -11,8 +11,15 @@ from software import main as software
 from acessorios import main as acessorios
 
 def main():
-  scraper=sys.argv[1]
-  withFormat=sys.argv[2]
+  scraper=''
+  withFormat=''
+  try:
+    scraper=sys.argv[1]
+    withFormat=sys.argv[2]
+  except Exception as e:
+    print("***Correr comando: python main.py <nome_do_scraper> <com_formatacao>")
+    print("***Exemplo: python main.py sensores true")
+
   if scraper=='interfaces':
     interfaces(withFormat)
   elif scraper=='equipamentos_laboratorio':
