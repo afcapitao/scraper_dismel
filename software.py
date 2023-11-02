@@ -41,8 +41,10 @@ def main(isFormatted):
     if software != '' and desc1 != '' and desc2 != '':
       softwares.append(software)
       if isFormatted == 'true':
-        removeTagsNotNeeded(desc1)   
+        removeTagsNotNeeded(desc1)
+        remove_attributes(desc1, 'class')   
         removeTagsNotNeeded(desc2)   
+        remove_attributes(desc2, 'class')
       descs1.append(desc1)
       descs2.append(desc2)
       count+=1

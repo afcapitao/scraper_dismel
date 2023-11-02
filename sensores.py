@@ -39,7 +39,8 @@ def main(isFormatted):
       accordion_inner_text = section.find('div', class_='accordion-inner')
 
       header = accordion_heading_text.get_text(strip=True)
-      removeTagsNotNeeded(accordion_inner_text)    
+      removeTagsNotNeeded(accordion_inner_text) 
+      remove_attributes(accordion_inner_text, 'class')   
       text = accordion_inner_text.get_text(strip=False) if isFormatted == 'false' else accordion_inner_text.parent.extract()
 
       if header=='Especificações':

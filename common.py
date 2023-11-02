@@ -30,7 +30,7 @@ def remove_attributes(soup,attr):
             del tag[attr]
 
 def filter_phrases(text):
-  return text.replace("<p><em>Para mais informações sobre este tópico, por favor contate a Dismel. </em></p>", "")
+  return text.replace("Para mais informações sobre este tópico, por favor contate a Dismel.", "")
 
 def extractAllUrls(soup):
   divs = soup.find_all('div', class_='row-fluid container main-body ba-container-fluid')

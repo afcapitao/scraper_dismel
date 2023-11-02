@@ -43,6 +43,7 @@ def main(isFormatted):
       if toExclude==False:
         if isFormatted == 'true':
           removeTagsNotNeeded(description)
+          remove_attributes(description, 'class')
         descriptions.append(description)
         product_names.append(product_name)
         count+=1

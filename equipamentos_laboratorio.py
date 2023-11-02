@@ -41,6 +41,7 @@ def main(isFormatted):
 
       if isFormatted=='true':
           removeTagsNotNeeded(text)
+          remove_attributes(text, 'class')
 
       if header.find('specificações') != -1:
         content['especificacoes'].append(text)

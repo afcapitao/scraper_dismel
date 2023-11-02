@@ -33,6 +33,7 @@ def main(isFormatted):
         descricao=kit[1] if isFormatted=='true' else kit[1].get_text(strip=False)
         if isFormatted=='true':
           removeTagsNotNeeded(descricao)
+          remove_attributes(descricao, 'class')
           descricao.extract()
 
         descs.append(descricao)

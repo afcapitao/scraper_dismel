@@ -57,7 +57,8 @@ def extract(mainTag, groupName, soup, isFormatted):
     tabStr=tab.extract() if isFormatted == 'true' else tab.get_text(strip=False)
     if isFormatted=='true':
       removeTagsNotNeeded(tabStr)
-    tabStr=filter_phrases(tabStr)
+      remove_attributes(tabStr, 'class')
+    tabStr=filter_phrases(str(tabStr))
   return tabStr
 
 def extractProductName(soup, isFormatted):
