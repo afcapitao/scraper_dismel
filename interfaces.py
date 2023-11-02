@@ -12,12 +12,13 @@ def main(isFormatted):
 
   urls = extractAllUrls(soup)
 
-  property_keys = ["produto", "descricao", "hardware", "software", "wireless", "acessorios", "sensorsCompatibles"]
+  property_keys = ["URL", "produto", "descricao", "hardware", "software", "wireless", "acessorios", "sensorsCompatibles"]
   content = {key: [] for key in property_keys}
 
   for url_product in urls:
-    print(URL+url_product)
-    page = requests.get(URL+url_product)
+    urlProduto=URL+url_product
+    print(urlProduto)
+    page = requests.get(urlProduto)
     soup = BeautifulSoup(page.content, "html.parser")
     productName = extractProductName(soup,isFormatted)
     print(productName)
@@ -25,6 +26,7 @@ def main(isFormatted):
     for span in soup.find_all('span'):
         span.unwrap()
 
+    content["URL"].append(urlProduto)
     content["produto"].append(productName)
     content["descricao"].append(extract("tab-0", "descricao", soup, isFormatted))
     content["hardware"].append(extract("tab-1", "hardware", soup, isFormatted))
@@ -34,6 +36,7 @@ def main(isFormatted):
     content["sensorsCompatibles"].append(extract("tab-5", "sensorsCompatibles", soup, isFormatted))
 
   df = pd.DataFrame({
+      'URL': content["URL"],
       'produto': content["produto"],
       'descricao': content["descricao"],
       'hardware': content["hardware"],

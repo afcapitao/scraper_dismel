@@ -32,7 +32,13 @@ def main():
     software(withFormat)
   elif scraper=='acessorios':
     acessorios(withFormat)
-
+  elif scraper=='all':
+    acessorios(withFormat)  
+    interfaces(withFormat)
+    equipamentos_laboratorio(withFormat)
+    sensores(withFormat)
+    sensores_dispositivos_moveis(withFormat)
+    software(withFormat)        
 
 if __name__ == "__main__":
     main()

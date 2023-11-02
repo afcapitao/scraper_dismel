@@ -37,13 +37,10 @@ def main(isFormatted):
     for section in accordion_sections:
       accordion_heading_text = section.find('div', class_='accordion-heading')
       accordion_inner_text = section.find('div', class_='accordion-inner')
-      text=''
 
       header = accordion_heading_text.get_text(strip=True)
-      if isFormatted == 'false':
-        text = accordion_inner_text.get_text(strip=True)
-      else:
-        text = accordion_inner_text
+      text = accordion_inner_text.get_text(strip=True) if isFormatted == 'false' else accordion_inner_text
+
 
       if header.find('specificações') != -1:
         content['especificacoes'].append(text)

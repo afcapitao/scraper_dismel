@@ -12,13 +12,14 @@ def main(isFormatted):
   urls = extractAllUrls(soup)
   urls = [href for href in urls if href != "/index.php?option=com_bagrid&view=page&id=397" and href != "#"]
 
-  property_keys = ["produto", "descricao", "especificacoes", "acessorios", "items_incluidos", "compatibilidades"]
+  property_keys = ["URL", "produto", "descricao", "especificacoes", "acessorios", "items_incluidos", "compatibilidades"]
   content = {key: [] for key in property_keys}
  
   count = 0
   for url_product in urls:
-    print(URL+url_product)
-    page = requests.get(URL+url_product)
+    urlProduto=URL+url_product
+    print(urlProduto)
+    page = requests.get(urlProduto)
     soup = BeautifulSoup(page.content, "html.parser")
     productName = extractProductName(soup)
     descricao = extractDescricao(soup,isFormatted)
@@ -30,18 +31,15 @@ def main(isFormatted):
         span.unwrap()
     
     i = 1
+    content["URL"].append(urlProducto)
     content["produto"].append(productName)
     content["descricao"].append(descricao)
     for section in accordion_sections:
       accordion_heading_text = section.find('div', class_='accordion-heading')
       accordion_inner_text = section.find('div', class_='accordion-inner')
 
-      text=''
       header = accordion_heading_text.get_text(strip=True)
-      if isFormatted == 'false':
-        text = accordion_inner_text.get_text(strip=True)
-      else:
-        text = accordion_inner_text
+      text = accordion_inner_text.get_text(strip=True) if isFormatted == 'false' else accordion_inner_text
 
       if header=='Especificações':
         content['especificacoes'].append(text)
@@ -63,6 +61,7 @@ def main(isFormatted):
     print(f"{key}: {len(value)}")
 
   df = pd.DataFrame({
+      'URL': content["URL"],
       'produto': content["produto"],
       'descricao': content["descricao"],
       'especificacoes': content["especificacoes"],
