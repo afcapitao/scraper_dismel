@@ -6,7 +6,7 @@ from common import *
 import re
 
 def main(isFormatted):
-
+  print("********* Start extaction Software *********")
   URL = "https://www.dismel.pt/index.php/software-livros-posteres/software-vernier"
   page = requests.get(URL)
   soup = BeautifulSoup(page.content, "html.parser")
@@ -31,15 +31,18 @@ def main(isFormatted):
     desc1 = desc1_div.get_text(strip=True)
     desc1=''
     if desc1_div is not None:
-      desc1 = desc1_div.get_text(strip=True) if isFormatted=='false' else desc1_div
+      desc1 = desc1_div.get_text(strip=True) if isFormatted=='false' else desc1_div.parent.extract()
 
     desc2_div = section.find('div', class_='ba-item-accordion ba-item').find('div', class_='accordion-inner')
     desc2=''
     if desc2_div is not None:
-      desc2 = desc2_div.get_text(strip=True) if isFormatted=='false' else desc2_div
+      desc2 = desc2_div.get_text(strip=True) if isFormatted=='false' else desc2_div.parent.extract()
    
     if software != '' and desc1 != '' and desc2 != '':
       softwares.append(software)
+      if isFormatted == 'true':
+        removeTagsNotNeeded(desc1)   
+        removeTagsNotNeeded(desc2)   
       descs1.append(desc1)
       descs2.append(desc2)
       count+=1
@@ -53,5 +56,6 @@ def main(isFormatted):
   }, index=pd.RangeIndex(start=0, stop=count))
 
   # Save the DataFrame to an Excel file
-  excel_file = buildFileName(Constants.FILENAME_SENSORES,isFormatted)
+  excel_file = buildFileName(Constants.FILENAME_SOFTWARE,isFormatted)
   df.to_excel(excel_file, index=False, header=True)
+  print("********* End extaction Software *********")

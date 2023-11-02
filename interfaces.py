@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from common import *
 
 def main(isFormatted):
-
+  print("********* Start extaction Interfaces *********")
   URL = "https://www.dismel.pt/interfaces-vernier"
   page = requests.get(URL)
   soup = BeautifulSoup(page.content, "html.parser")
@@ -22,9 +22,8 @@ def main(isFormatted):
     soup = BeautifulSoup(page.content, "html.parser")
     productName = extractProductName(soup,isFormatted)
     print(productName)
-    remove_style_attributes(soup)
-    for span in soup.find_all('span'):
-        span.unwrap()
+    #remove_attributes(soup,'style')
+    #remove_tag(soup,'span')
 
     content["URL"].append(urlProduto)
     content["produto"].append(productName)
@@ -49,16 +48,16 @@ def main(isFormatted):
   # Save the DataFrame to an Excel file
   excel_file = buildFileName(Constants.FILENAME_INTERFACES,isFormatted)
   df.to_excel(excel_file, index=False, header=True)
+  print("********* End extaction Interfaces *********")
 
 def extract(mainTag, groupName, soup, isFormatted):
   tab = soup.find("div", id=mainTag)
   tabStr=''
   if tab:
-    remove_tag(tab, "span")
-    remove_tag(tab, "div")
-    tabStr=str(tab) if isFormatted == 'true' else tab.get_text(strip=True)
+    removeTagsNotNeeded(tab)
+    tabStr=str(tab.extract()) if isFormatted == 'true' else tab.get_text(strip=True)
     tabStr=filter_phrases(tabStr)
-  return tabStr #if isFormatted == True else tabStr.get_text(strip=True)
+  return tabStr
 
 def extractProductName(soup, isFormatted):
   initialNames = soup.find_all("span", {"style":"font-size:36px;"})

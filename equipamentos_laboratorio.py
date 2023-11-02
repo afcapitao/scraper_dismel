@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from common import *
 
 def main(isFormatted):
-
+  print("********* Start extaction Equipamentos Laboratório *********")
   URL = "https://www.dismel.pt/equipamento-laboratorio-vernier"
   page = requests.get(URL)
   soup = BeautifulSoup(page.content, "html.parser")
@@ -26,9 +26,7 @@ def main(isFormatted):
     print(productName)
 
     accordion_sections = soup.find_all('div', class_='accordion-group')
-    remove_style_attributes(soup)
-    for span in soup.find_all('span'):
-        span.unwrap()
+    remove_attributes(soup,'style')
     
     i = 1
     content["URL"].append(urlProduto)
@@ -39,8 +37,10 @@ def main(isFormatted):
       accordion_inner_text = section.find('div', class_='accordion-inner')
 
       header = accordion_heading_text.get_text(strip=True)
-      text = accordion_inner_text.get_text(strip=True) if isFormatted == 'false' else accordion_inner_text
+      text = accordion_inner_text.get_text(strip=True) if isFormatted == 'false' else accordion_inner_text.extract()
 
+      if isFormatted=='true':
+          removeTagsNotNeeded(text)
 
       if header.find('specificações') != -1:
         content['especificacoes'].append(text)
@@ -76,3 +76,4 @@ def main(isFormatted):
 
   excel_file = buildFileName(Constants.FILENAME_EQUIP_LAB,isFormatted)  
   df.to_excel(excel_file, index=False, header=True)
+  print("********* End extaction Equipamentos Laboratório *********")

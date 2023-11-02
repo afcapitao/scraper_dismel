@@ -9,6 +9,7 @@ from sensores import main as sensores
 from sensores_dispositivos_moveis import main as sensores_dispositivos_moveis
 from software import main as software
 from acessorios import main as acessorios
+from kits_ciencias import main as kits_ciencias
 
 def main():
   scraper=''
@@ -32,13 +33,16 @@ def main():
     software(withFormat)
   elif scraper=='acessorios':
     acessorios(withFormat)
+  elif scraper=='kits_ciencias':
+    kits_ciencias(withFormat)
   elif scraper=='all':
     acessorios(withFormat)  
     interfaces(withFormat)
     equipamentos_laboratorio(withFormat)
     sensores(withFormat)
     sensores_dispositivos_moveis(withFormat)
-    software(withFormat)        
+    software(withFormat)  
+    kits_ciencias(withFormat)        
 
 if __name__ == "__main__":
     main()
