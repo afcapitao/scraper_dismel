@@ -30,7 +30,7 @@ def main(isFormatted):
     remove_attributes(description_span, 'style')
 
     if isFormatted == 'false':
-      description = description_span.get_text(strip=True) if description_span is not None else ''
+      description = description_span.get_text(strip=False) if description_span is not None else ''
     else:
       description = description_span.parent.extract() if description_span is not None else ''
 

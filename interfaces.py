@@ -54,8 +54,9 @@ def extract(mainTag, groupName, soup, isFormatted):
   tab = soup.find("div", id=mainTag)
   tabStr=''
   if tab:
-    removeTagsNotNeeded(tab)
-    tabStr=str(tab.extract()) if isFormatted == 'true' else tab.get_text(strip=True)
+    tabStr=tab.extract() if isFormatted == 'true' else tab.get_text(strip=False)
+    if isFormatted=='true':
+      removeTagsNotNeeded(tabStr)
     tabStr=filter_phrases(tabStr)
   return tabStr
 
@@ -64,6 +65,6 @@ def extractProductName(soup, isFormatted):
   nested_span_text=''
   for initialName in initialNames:
     nested_spans = initialName.find_all("span")
-    nested_span_text = nested_span_text + ' '.join([nested_span.text.strip() for nested_span in nested_spans if nested_span.text.strip()])
+    nested_span_text = nested_span_text + ' '.join([nested_span.get_text(strip=False) for nested_span in nested_spans if nested_span.get_text(strip=False)])
   if nested_span_text:
     return nested_span_text

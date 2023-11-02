@@ -30,7 +30,7 @@ def main(isFormatted):
         produto=kit[0].get_text(strip=True)
         kits.append(produto)
 
-        descricao=kit[1] if isFormatted=='true' else kit[1].get_text(strip=True)
+        descricao=kit[1] if isFormatted=='true' else kit[1].get_text(strip=False)
         if isFormatted=='true':
           removeTagsNotNeeded(descricao)
           descricao.extract()

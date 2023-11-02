@@ -16,7 +16,7 @@ def extractDescricao(soup, isFormatted):
         remove_tag(content_text_div,'span')
         remove_tag(content_text_div,'a')
         remove_tag(content_text_div,'input')
-      return content_text_div.get_text(strip=True) if isFormatted=='false' else content_text_div
+      return content_text_div.get_text(strip=False) if isFormatted=='false' else content_text_div
 
 def extractProductName(soup):
   row_div = soup.find('div', class_='ba-row row-fluid ba-no-gutter rooms-row')
@@ -30,7 +30,6 @@ def remove_attributes(soup,attr):
             del tag[attr]
 
 def filter_phrases(text):
-  text=text.replace("\n","")
   return text.replace("<p><em>Para mais informações sobre este tópico, por favor contate a Dismel. </em></p>", "")
 
 def extractAllUrls(soup):

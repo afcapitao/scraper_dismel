@@ -39,7 +39,7 @@ def main(isFormatted):
       accordion_inner_text = section.find('div', class_='accordion-inner')
 
       header = accordion_heading_text.get_text(strip=True)
-      text = accordion_inner_text.get_text(strip=True) if isFormatted == 'false' else accordion_inner_text.parent.extract()
+      text = accordion_inner_text.get_text(strip=False) if isFormatted == 'false' else accordion_inner_text.parent.extract()
       if isFormatted == 'true':
         removeTagsNotNeeded(text)
 

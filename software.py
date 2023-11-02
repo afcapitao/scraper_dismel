@@ -28,15 +28,15 @@ def main(isFormatted):
     print('software: ' +software)
 
     desc1_div = section.find('div', class_='ba-item-text ba-item').find('div', class_='content-text')
-    desc1 = desc1_div.get_text(strip=True)
+    desc1 = desc1_div.get_text(strip=False)
     desc1=''
     if desc1_div is not None:
-      desc1 = desc1_div.get_text(strip=True) if isFormatted=='false' else desc1_div.parent.extract()
+      desc1 = desc1_div.get_text(strip=False) if isFormatted=='false' else desc1_div.parent.extract()
 
     desc2_div = section.find('div', class_='ba-item-accordion ba-item').find('div', class_='accordion-inner')
     desc2=''
     if desc2_div is not None:
-      desc2 = desc2_div.get_text(strip=True) if isFormatted=='false' else desc2_div.parent.extract()
+      desc2 = desc2_div.get_text(strip=False) if isFormatted=='false' else desc2_div.parent.extract()
    
     if software != '' and desc1 != '' and desc2 != '':
       softwares.append(software)

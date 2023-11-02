@@ -40,7 +40,7 @@ def main(isFormatted):
 
       header = accordion_heading_text.get_text(strip=True)
       removeTagsNotNeeded(accordion_inner_text)    
-      text = accordion_inner_text.get_text(strip=True) if isFormatted == 'false' else accordion_inner_text.parent.extract()
+      text = accordion_inner_text.get_text(strip=False) if isFormatted == 'false' else accordion_inner_text.parent.extract()
 
       if header=='Especificações':
         content['especificacoes'].append(text)
