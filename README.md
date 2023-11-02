@@ -8,10 +8,10 @@ Installation:
 2) Create venv (https://realpython.com/python-virtual-environments-a-primer/)
 
 3) install libs:
-    -pip install requests
-    -pip install pandas
-    -pip install bs4
-    -pip install openpyxl
+    - pip install requests
+    - pip install pandas
+    - pip install bs4
+    - pip install openpyxl
 
 Running scraper:
 
